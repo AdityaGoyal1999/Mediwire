@@ -1,0 +1,75 @@
+{% extends 'myapp/base.html' %} {% block content %}
+<h1 style="text-align: center;">Add Property</h1>
+<div class="row">
+    <form action="{% url 'save_property' %}" class="col s12" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>File</span>
+                    <input type="file" multiple name="image">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload images of the Property.">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="street" type="text" class="validate" name="street">
+                <label for="street">Unit number and Street</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="city" type="text" class="validate" name="city">
+                <label for="city">City</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="state" type="text" class="validate" name="state">
+                <label for="state">State/Province</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="pincode" type="text" class="validate" name="pincode">
+                <label for="Pincode">Pincode</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="Country" type="text" class="validate" name="country">
+                <label for="Country">Country</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="rent" type="number" class="validate" name="rent">
+                <label for="rent">Rent Per Month - $</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="movein" type="date" class="validate" name="movein">
+                <label for="movein">Available to Move In</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="moveout" type="date" class="validate" name="moveout">
+                <label for="moveout">Move out</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="notes" type="text" class="validate" name="notes">
+                <label for="notes">Additional Notes</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Add Property
+                  </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

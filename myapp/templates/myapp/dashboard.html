@@ -1,0 +1,54 @@
+{% extends 'myapp/base.html' %} {% block content %}
+<h1 style="text-align: center;">Dashboard</h1>
+
+{% if category == 'warrior' %}
+<form action="{% url 'results' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="search" placeholder="Search Location">
+    <button class="btn waves-effect waves-light" type="submit" name="action">Search
+        <i class="material-icons right">search</i>
+      </button>
+</form>
+<br>
+<br>
+<div class="row">
+    <div class="col s12">
+        <h3 style="text-align: center;">Enter the suburb or city. We'll try to find the best matches for you 🚀</h3>
+    </div>
+</div>
+{% else %}
+<div class="row" style="text-align: center;">
+    <div class="col s6">
+        <h2>List of Properties</h2>
+    </div>
+    <div class="col s6">
+        <a href="{% url 'add_property' %}">
+            <i class="large material-icons">add</i>
+            <p>Add new property</p>
+        </a>
+    </div>
+</div>
+<div class="row">
+    {% for prop in properties %}
+    <div class="col s4">
+        <div class="card">
+            <div class="card-image">
+                <img style="height: 200px; object-fit: cover;" src="/media/{{prop.owner}}/{{prop.pk}}/one.png">
+            </div>
+            <div class="card-content">
+                <p><b>${{prop.rent}}</b></p>
+                <p>{{prop.number_and_street}},<br>{{prop.city}}, {{prop.country}}.</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'single_property' prop.pk %}">VIEW</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col s12">
+        <h3 style="text-align: center;">You don't have any properties. Add some 😃</h3>
+    </div>
+    {% endfor %}
+</div>
+
+{% endif %} {% endblock %}

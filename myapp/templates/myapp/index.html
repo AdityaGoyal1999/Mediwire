@@ -1,0 +1,69 @@
+{% extends 'myapp/base.html' %} {% load static %} {% block import %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endblock %} {% block content %}
+<h1 style="text-align: center;">Medical Record On The Go</h1>
+<br>
+<div class="container" style="display: flex; align-items: center; justify-content: center;">
+    <img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?cs=srgb&dl=pexels-pixabay-40568.jpg&fm=jpg" style="width: 80%;">
+</div>
+<div id="login-buttons" style="text-align: center;">
+    <a href="{% url 'login' %}" class="waves-effect waves-light btn-large blue">Login</a>
+    <a href="{% url 'signup' %}" class="waves-effect waves-light btn-large">SignUp</a>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col s4">
+            <div class="center">
+                <i class="large material-icons" style="color: #EE6E73">local_hospital</i>
+                <p><b><u>Quick Health Record Access</u> <br>Don't remember all the treatments you have gone through?</b></p>
+                <p class="light center">We keep a secure ledger of all treatments and conditions you have gone through.</p>
+            </div>
+        </div>
+
+        <div class="col s4">
+            <div class="center">
+                <i class="large material-icons" style="color: orange">language</i>
+                <p><b><u>Universal Access</u> <br>Tired of carrying all the prescriptions?</b></p>
+                <p class="light center">Let us take the burden of that. So you can be stress free the next time you're travelling</p>
+            </div>
+        </div>
+
+        <div class="col s4">
+            <div class="center">
+                <i class="large material-icons" style="color: blue;">insert_emoticon</i>
+                <p><b><u>Worried about your private information?</u></b></p>
+                <p class="light center">We prioritize our customers that most and trust runs at the forefront of that relationship. We won't sell or disclose any personal info⚔️</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class='row'>
+    <div class='col m4'>
+        <div class='card blue lighten-4'>
+            <div class='card-content black-text'>
+                <p>Will contain quotes from a Covid warrior who has used and appreciated our service.</p>
+                <p>- Turja Chowdhury, Covid warrior </p>
+            </div>
+        </div>
+    </div>
+    <div class='col m4'>
+        <div class='card red lighten-3'>
+            <div class='card-content black-text'>
+                <p>Will contain quotes from a Covid warrior who has used and appreciated our service.
+                </p>
+                <p>- Roan Numa, Covid warrior
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class='col m4'>
+        <div class='card indigo lighten-4'>
+            <div class='card-content black-text'>
+                <p>Will contain quotes from a landlord who has used and appreciated our service.
+                </p>
+                <p>- Aditya Goyal, landlord
+            </div>
+        </div>
+    </div>
+</div> -->
+{% endblock %}

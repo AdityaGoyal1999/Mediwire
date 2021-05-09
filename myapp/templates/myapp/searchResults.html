@@ -1,0 +1,191 @@
+{% extends 'myapp/base.html' %} {% block content %}
+<h1 style="text-align: center;">Dashboard</h1>
+<form action="{% url 'results' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="search" placeholder="Search Location">
+    <button class="btn waves-effect waves-light" type="submit" name="action">Search
+        <i class="material-icons right">search</i>
+      </button>
+</form>
+<h2 style="text-align: center;">{{ search | title }}</h2>
+{% if search == 'Toronto' %}
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js">
+</script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div>
+                <style>
+                    body {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    
+                    #map {
+                        position: static;
+                        width: 100%;
+                        height: 100%;
+                        bottom: 100%;
+                        padding: 25%;
+                    }
+                </style>
+                <style>
+                    .mapboxgl-popup {
+                        max-width: 400px;
+                        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+                    }
+                </style>
+                <div id="map"></div>
+                <script>
+                    mapboxgl.accessToken = 'pk.eyJ1IjoidHVyamEtYyIsImEiOiJja2N5MnVjYmowNXc4MndyeW1mMjFvMGdrIn0.zLupgmQA--Xi9O7EPDGM0A';
+                    var map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v11',
+                        center: [-79.37766964567618, 43.66175520007096],
+                        zoom: 11.15
+                    });
+
+                    map.on('load', function() {
+                        map.loadImage(
+                            'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+                            // Add an image to use as a custom marker
+                            function(error, image) {
+                                if (error) throw error;
+                                map.addImage('custom-marker', image);
+
+                                map.addSource('places', {
+                                    'type': 'geojson',
+                                    'data': {
+                                        'type': 'FeatureCollection',
+                                        'features': [{
+                                            'type': 'Feature',
+                                            'properties': {
+                                                'description': '<strong>Church and Wellesley</strong><p>Church where students on Campus can visit</p>'
+                                            },
+                                            'geometry': {
+                                                'type': 'Point',
+                                                'coordinates': [-79.3838011, 43.6655242]
+                                            }
+                                        }, {
+                                            'type': 'Feature',
+                                            'properties': {
+                                                'description': '<strong>Casa Loma</strong><p>Head to Lounge 201 (201 Massachusetts Avenue NE) Sunday for a Mad Men Season Five Finale Watch Party, complete with 60s costume contest, Mad Men trivia, and retro food and drink. 8:00-11:00 p.m. $10 general admission, $20 admission and two hour open bar.</p>'
+                                            },
+                                            'geometry': {
+                                                'type': 'Point',
+                                                'coordinates': [-79.409415775, 43.6781015]
+                                            }
+                                        }, {
+                                            'type': 'Feature',
+                                            'properties': {
+                                                'description': '<strong>Trinity Bellwoods Park</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a Big Backyard Beach Bash and Wine Fest on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.</p>'
+                                            },
+                                            'geometry': {
+                                                'type': 'Point',
+                                                'coordinates': [-79.3866205, 43.6508369]
+                                            }
+                                        }, {
+                                            'type': 'Feature',
+                                            'properties': {
+                                                'description': '<strong>Toronto Midtown Homstay</strong><p>The Ballston Arts & Crafts Market sets up shop next to the Ballston metro this Saturday for the first of five dates this summer. Nearly 35 artists and crafters will be on hand selling their wares. 10:00-4:00 p.m.</p>'
+                                            },
+                                            'geometry': {
+                                                'type': 'Point',
+                                                'coordinates': [-79.4234499, 43.6785781]
+                                            }
+                                        }, {
+                                            'type': 'Feature',
+                                            'properties': {
+                                                'description': '<strong>Mod Club Theatre</strong><p>Truckeroo brings dozens of food trucks, live music, and games to half and M Street SE (across from Navy Yard Metro Station) today from 11:00 a.m. to 11:00 p.m.</p>'
+                                            },
+                                            'geometry': {
+                                                'type': 'Point',
+                                                'coordinates': [-79.4193692, 43.6552693]
+                                            }
+                                        }]
+                                    }
+                                });
+
+                                // Add a layer showing the places.
+                                map.addLayer({
+                                    'id': 'places',
+                                    'type': 'symbol',
+                                    'source': 'places',
+                                    'layout': {
+                                        'icon-image': 'custom-marker',
+                                        'icon-allow-overlap': true
+                                    }
+                                });
+                            }
+                        );
+
+                        // Create a popup, but don't add it to the map yet.
+                        var popup = new mapboxgl.Popup({
+                            closeButton: false,
+                            closeOnClick: false
+                        });
+
+                        map.on('mouseenter', 'places', function(e) {
+                            // Change the cursor style as a UI indicator.
+                            map.getCanvas().style.cursor = 'pointer';
+
+                            var coordinates = e.features[0].geometry.coordinates.slice();
+                            var description = e.features[0].properties.description;
+
+                            // Ensure that if the map is zoomed out such that multiple
+                            // copies of the feature are visible, the popup appears
+                            // over the copy being pointed to.
+                            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                            }
+
+                            // Populate the popup and set its coordinates
+                            // based on the feature found.
+                            popup
+                                .setLngLat(coordinates)
+                                .setHTML(description)
+                                .addTo(map);
+                        });
+
+                        map.on('mouseleave', 'places', function() {
+                            map.getCanvas().style.cursor = '';
+                            popup.remove();
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col s12">
+        <h3 style="text-align: center;">We counldn't find locations on the map 😶</h3>
+    </div>
+</div>
+
+{% endif %}
+<div class="row">
+    {% for prop in properties %}
+    <div class="col s4">
+        <div class="card">
+            <div class="card-image">
+                <img style="height: 200px; object-fit: cover;" src="/media/{{prop.owner}}/{{prop.pk}}/one.png">
+            </div>
+            <div class="card-content">
+                <p><b>${{prop.rent}}</b></p>
+                <p>{{prop.number_and_street}},<br>{{prop.city}}, {{prop.country}}.</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'single_property' prop.pk %}">VIEW</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col s12">
+        <h3 style="text-align: center;">We didn't find any properties close to you 😶</h3>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'myapp/base.html' %} {% block import %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.slider');
+        var options = {
+            'indicators': true,
+            'height': 500,
+            'duration': 500,
+            'interval': 6000,
+        }
+        var instances = M.Slider.init(elems, options);
+    });
+</script>
+{% endblock %} {% block content %}
+<h1 style="text-align: center;">Single Property</h1>
+
+<div class="row">
+    <div class="col s6">
+        <div class="slider" style="width: 500px;">
+            <ul class="slides">
+                <li>
+                    <img src="/media/{{email}}/{{key}}/{{image_names.0}}">
+                </li>
+                {% if image_names.1 is not None %}
+                <li>
+                    <img src="/media/{{email}}/{{key}}/{{image_names.1}}">
+                </li>
+                {% if image_names.2 is not None %}
+                <li>
+                    <img src="/media/{{email}}/{{key}}/{{image_names.2}}">
+                </li>
+                {% if image_names.3 is not None %}
+                <li>
+                    <img src="/media/{{email}}/{{key}}/{{image_names.3}}">
+                </li>
+                {% endif %} {% endif %}{% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="col s6">
+        <h3 style="text-align: center;">Information</h3>
+        <div class="row">
+            <div class="col s6">
+                <h5 style="margin-left: 10px;">Rent</h5>
+            </div>
+            <div class="col s6">
+                <h5>${{property.rent}}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <h5 style="margin-left: 10px;">Location</h5>
+            </div>
+            <div class="col s6">
+                <h5>{{property.number_and_street}},<br> {{property.city}}, {{property.state}},<br> {{property.country}} - {{property.pincode}}
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <h5 style="margin-left: 10px;">Contact</h5>
+            </div>
+            <div class="col s6">
+                <h5><a href="mailto: {{property.owner}}">Email me</a></h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <h5 style="margin-left: 10px;">Notes</h5>
+            </div>
+            <div class="col s6">
+                {% if property.notes is None %}
+                <h5>No additional notes</h5>
+                {% else %}
+                <h5>{{property.notes}}</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

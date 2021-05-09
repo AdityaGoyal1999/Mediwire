@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Medipository</title>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    {% block import %}{% endblock %}
+    <script>
+        function showToast(message, duration) {
+            Materialize.toast(message, duration);
+        }
+    </script>
+</head>
+
+<body>
+    <nav>
+        <div class="container nav-wrapper">
+            <a href="/" class="brand-logo">Medipository</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="/">Home</a></li>
+                <li><a href="{% url 'platform' %}">Platform Information</a></li>
+                <li><a href="{% url 'covid' %}">Covid Information</a></li>
+                {% if logout != "no" %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        {% if message %}
+        <div style="text-align: center; margin-top: 10px;">
+            <a class="btn" onclick="showToast('', 1000)">{{ message }}</a>
+        </div>
+        {% endif %} {% block content %} {% endblock %}
+    </div>
+
+
+    <!-- Start of ChatBot (www.chatbot.com) code -->
+    <script type="text/javascript">
+        window.__be = window.__be || {};
+        window.__be.id = "5f1a901bb474b300070999f0";
+        (function() {
+            var be = document.createElement('script');
+            be.type = 'text/javascript';
+            be.async = true;
+            be.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.chatbot.com/widget/plugin.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(be, s);
+        })();
+    </script>
+    <!-- End of ChatBot code -->
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+
+</html>
