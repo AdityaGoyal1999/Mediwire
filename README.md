@@ -23,6 +23,7 @@ For the full stack application, we are using Python's framework Django to comple
 ## What's next for MedWire
 
 We genuinely believe that our project has a real world market. Since there is a big lack of such infrastructure where the patient can store his medical info and have access to it throughout the world. However a patient  today takes physical copies or plethora of emails with him as medical records which is not up to the standard of the current digital are. Hence we have the current aims-
+
 _Technical Aims_
 1. Have a mobile app for the project for iOS & Android.
 2. Invest more in security, QA, DevOps etc. to create an ultimate user experience for the users.
