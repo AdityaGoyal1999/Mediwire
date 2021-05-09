@@ -17,9 +17,9 @@ def home(request):
 
 
 # Information on the platform
-def platform_info(request):
+def aboutus(request):
 
-    return render(request, template_name="myapp/platformInfo.html", context={"logout": "no",})
+    return render(request, template_name="myapp/AboutUs.html", context={"logout": "no",})
 
 
 # Covid info page
@@ -90,7 +90,7 @@ def login(request):
 
     request.session['email'] = email
     props = []
-    if user.category != 'warrior':
+    if user.category != 'doctor':
         props = Property.objects.filter(owner=email).all()
 
     # Map

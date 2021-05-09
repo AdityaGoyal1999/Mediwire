@@ -1,5 +1,5 @@
 {% extends 'myapp/base.html' %} {% block import %} {% endblock %} {% block content %} {% if login %}
-<h1 style="text-align: center;">Login</h1>
+<h1 style="text-align: center; margin-top: 200px;">Login</h1>
 <div class="row">
     <form action="{% url 'loginUser' %}" class="col s12" method="post">
         {% csrf_token %}
@@ -23,7 +23,7 @@
     </form>
 </div>
 {% else %}
-<h1 style="text-align: center;">SignUp</h1>
+<h1 style="text-align: center; margin-top: 150px;">SignUp</h1>
 <div class="row">
     <form action="{% url 'create_account' %}" class="col s12" method="POST">
         {% csrf_token %}
@@ -31,14 +31,14 @@
             <div class="input-field col s12">
                 <p>
                     <label>
-                      <input name="category" type="radio" value="warrior"/>
-                      <span>Covid Warrior</span>
+                      <input name="category" type="radio" value="doctor"/>
+                      <span>Doctor👨‍⚕️</span>
                     </label>
                 </p>
                 <p>
                     <label>
-                      <input name="category" type="radio" value="landlord" />
-                      <span>Landlord</span>
+                      <input name="category" type="radio" value="patient" />
+                      <span>Patient🤒</span>
                     </label>
                 </p>
             </div>
