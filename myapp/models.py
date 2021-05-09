@@ -13,22 +13,23 @@ class User(models.Model):
         return '{}'.format(self.name)
 
 
-class Property(models.Model):
-    owner = models.CharField(max_length=500, null=True)
+class Record(models.Model):
+    patient = models.CharField(max_length=500, null=True)
     number_and_street = models.CharField(max_length=500, null=True)
     pincode = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=100, null=True)
     state = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
-    occupied = models.CharField(max_length=100, null=True)
-    rent = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    vaccinations = models.CharField(max_length=1000, null=True)
+    allergies = models.CharField(max_length=1000, null=True)
+    appointments = models.CharField(max_length=1000, null=True)
     notes = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return self.owner+"\'s property"
+        return self.owner+"\'s Record"
 
 
 class Image(models.Model):
 
-    post = models.ForeignKey(Property, default=None, on_delete=models.CASCADE)
+    post = models.ForeignKey(Record, default=None, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='static/images/')

@@ -12,7 +12,7 @@ urlpatterns = [
     path('dashboard/', views.create_account, name="create_account"),
     path('loginUser/', views.login, name='loginUser'),
     path('results/', views.search_result, name="results"),
-    path('results/singleProperty/<int:pk>/', views.single_property, name="single_property"),
+    path('results/singleProperty/', views.single_property, name="single_property"),
     path('addProperty/', views.add_property, name="add_property"),
     path('saveProperty/', views.save_property, name="save_property"),
 ]

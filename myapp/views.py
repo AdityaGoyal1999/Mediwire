@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
-from .models import User, Property, Image
+from .models import User, Record, Image
 from django.core.files.storage import FileSystemStorage
 import os
 import geopy
@@ -91,7 +91,7 @@ def login(request):
     request.session['email'] = email
     props = []
     if user.category != 'doctor':
-        props = Property.objects.filter(owner=email).all()
+        props = Record.objects.filter(patient=email).all()
 
     # Map
     print("Toronto")
@@ -104,7 +104,7 @@ def login(request):
 def search_result(request):
 
     search = request.POST.get('search')
-    props = Property.objects.all()
+    props = Record.objects.all()
 
     matching_properties = []
     for prop in props:
@@ -127,14 +127,16 @@ def add_property(request):
 # Save property
 def save_property(request):
 
-    owner = request.session['email']
+    patient = request.session['email']
     street = request.POST.get('street')
     city = request.POST.get('city')
     state = request.POST.get('state')
     pincode = request.POST.get('pincode')
     country = request.POST.get('country')
     photo = request.FILES.get('image')
-    rent = request.POST.get('rent')
+    vaccinations = request.POST.get('vaccinations')
+    allergies = request.POST.get('allergies')
+    appointments = request.POST.get('appointments')
     notes = request.POST.get('notes')
 
     if rent == '' or rent is None:
@@ -142,7 +144,7 @@ def save_property(request):
     else:
         rent = float(rent)
 
-    prop = Property.objects.create(owner=owner,number_and_street=street, pincode=pincode, city=city, state=state, country=country, rent=rent, notes=notes)
+    prop = Record.objects.create(patient=patient,number_and_street=street, pincode=pincode, city=city, state=state, country=country, vaccinations=vaccinations, allergies=allergies, appointments=appointments, notes=notes)
     img = Image.objects.create(post=prop, photo=photo)
 
     loc = "media/{}/{}/".format(request.session['email'], prop.pk)
@@ -166,19 +168,19 @@ def save_property(request):
     user = User.objects.filter(email=request.session['email']).first()
     props = Property.objects.filter(owner=request.session['email']).all()
 
-    return render(request, template_name='myapp/dashboard.html', context={'category': user.category, 'properties': props, "message": "Your property was added!", "user": user,})
+    return render(request, template_name='myapp/dashboard.html', context={'category': user.category, 'properties': props, "message": "Your record was added!", "user": user,})
 
 
 # Show information on single property
-def single_property(request, pk):
+def single_property(request):
 
-    prop = Property.objects.get(pk=pk)
-    email = prop.owner
+    # prop = Record.objects.get(pk=pk)
+    # email = prop.owner
 
-    path = "{}/media/{}/{}/".format(os.getcwd(), email, pk)
-    img_list =os.listdir(path)
+    # path = "{}/media/{}/{}/".format(os.getcwd(), email, pk)
+    # img_list =os.listdir(path)
     
-    return render(request, 'myapp/singleProperty.html', context={"image_names": img_list, "email": email, "property": prop, "key": pk})
+    return render(request, 'myapp/singleProperty.html')
 
 
 # Logout of the platform
