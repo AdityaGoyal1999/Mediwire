@@ -35,3 +35,6 @@ _Marketing Aims_
 1. Reach out to customers to get the initial actual customer base(doctors and patients) on the project.
 2. Once we have reasonable amount of users, we will reach out to investors and seek capital for scaling our product immensely.
 3. Create incentives for the users to hop on to our platforms to get a mass user base. Thereby, making the use of our project a habit in the healthcare industry.
+
+## YouTube
+<a href="https://youtu.be/5BbXDxu6qJM">Presentation</a>
