@@ -1,4 +1,4 @@
-# TOHacks-2021
+# MEDIWIRE
 
 ## Inspiration
 
